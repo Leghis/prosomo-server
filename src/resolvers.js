@@ -18,7 +18,10 @@ const resolvers = {
             const {
                 surname ,name , email, phone , town , region ,box ,country ,comment1 ,comment2
             } = args.contact;
-            const newContact = new Contact({  surname ,name , email, phone , town , region ,box ,country ,comment1 ,comment2  });
+            let Customcomment1 = comment1?comment1:""
+            let Customcomment2 = comment2?comment2:""
+
+            const newContact = new Contact({  surname ,name , email, phone , town , region ,box ,country ,Customcomment1 ,Customcomment2  });
 
             await newContact.save();
             return newContact
