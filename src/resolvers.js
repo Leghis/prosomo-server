@@ -1,7 +1,7 @@
 const db = require("./connection/db2")
 const { v4: uuidv4 } = require('uuid');
 
-const contactCollection = db.collection('contacts')
+const contactCollection = db.collection('mescontacts')
 const resolvers = {
     Query:{
         getAllContact:async ()=>{
