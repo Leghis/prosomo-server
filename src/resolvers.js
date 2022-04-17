@@ -32,8 +32,8 @@ const resolvers = {
                 region,
                 box,
                 country,
-                Customcomment1,
-                Customcomment2
+                comment1:Customcomment1,
+                comment2:Customcomment2
             })
 
             return create
