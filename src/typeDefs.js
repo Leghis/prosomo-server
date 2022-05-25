@@ -25,7 +25,7 @@ const typeDefs = gql`
   }
 
   type Query{
-    getAllContact(perPage: Int, page:Int): data
+    getAllContact(perPage: Int, page:Int):data
     getContact(id:ID): Contact
   }
 

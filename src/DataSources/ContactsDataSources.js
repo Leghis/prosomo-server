@@ -7,10 +7,6 @@ class ContactsDataSources extends MongoDataSource {
 
    async getAllContact(args) {
     console.log(args)
-    // this.dataArray = this.collection.find({})
-    //   .skip(args.page === 0 ? 0 : args.perPage * (args.page))
-    //   .limit(args.perPage ? args.perPage : 5).toArray()
-
     this.dataArray = await this.collection.aggregate([
       {
         $group: {
@@ -29,7 +25,6 @@ class ContactsDataSources extends MongoDataSource {
         }
       }
     ]).toArray()
-
     return this.dataArray[0]
   }
 
@@ -55,18 +50,15 @@ class ContactsDataSources extends MongoDataSource {
       comment2: comment2 ? comment2 : ""
     }
     this.collection.insertOne(contact)
-    this.deleteFromCacheById(id)
     return contact
   }
 
   deleteContact(id) {
-    this.deleteFromCacheById(id)
     this.collection.findOneAndDelete({_id: id})
     return 'Deleted Contact'
   }
 
-  refreshContact(id, contact) {
-    this.deleteFromCacheById(id)
+   refreshContact(id, contact) {
     this.collection.findOneAndUpdate({_id: id}, {$set: contact})
     return contact
   }
