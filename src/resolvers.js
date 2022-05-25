@@ -1,30 +1,26 @@
-const db = require("./connection/db2")
-const {v4: uuidv4} = require('uuid');
-
-const contactCollection = db.collection('mescontacts')
 const resolvers = {
   Query: {
-    getAllContact: async (_, __, {dataSources: {contacts}}) => {
-      return contacts.getAllContact()
+    //function to retrieve all contacts
+    getAllContact: async (_, args, {dataSources: {contacts}}) => {
+      return contacts.getAllContact(args)
     },
-    getContact: async (_, __, {dataSources: {contacts}}) => {
-      return contacts.getContact(__.id)
-    }
+    //function to retrieve a contact
+    getContact: async (_, args, {dataSources: {contacts}}) => {
+      return contacts.getContact(args.id)
+    },
   },
   Mutation: {
+    //function to create a contact
     createContact: async (_, args, {dataSources: {contacts}}) => {
       return contacts.createContact(args)
-
     },
-    deleteContact: async (_, {id},{dataSources: {contacts}}) => {
-      // await contactCollection.findOneAndDelete({id: id})
+    //function to delete a contact
+    deleteContact: async (_, {id}, {dataSources: {contacts}}) => {
       return contacts.deleteContact(id)
     },
-    refreshContact: async (_, {contact, id}) => {
-
-      const actu = await contactCollection.findOneAndUpdate({id: id}, {$set: contact})
-
-      return actu
+    //function to update a contact
+    refreshContact: async (_, {contact, id}, {dataSources: {contacts}}) => {
+      return contacts.refreshContact(id, contact)
     }
   }
 }

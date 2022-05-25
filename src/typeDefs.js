@@ -15,9 +15,17 @@ const typeDefs = gql`
     comment1: String
     comment2: String
   }
+  type count{
+    count : Int
+  }
+
+  type data{
+    count : Int,
+    data : [Contact]
+  }
 
   type Query{
-    getAllContact: [Contact]
+    getAllContact(perPage: Int, page:Int): data
     getContact(id:ID): Contact
   }
 
@@ -36,7 +44,6 @@ const typeDefs = gql`
 
   type Mutation{
     createContact(contact: ContactInput!): Contact
-
     deleteContact(id: ID!): String
     refreshContact(id: ID!,contact: ContactInput):Contact
   }
