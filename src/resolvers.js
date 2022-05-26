@@ -30,10 +30,40 @@ const resolvers = {
     }
 
   },
-  Contact:{
-    surname(parent){
-      return  parent.surname
-    }
+  Contact: {
+    _id(parent) {
+      return parent._id
+    },
+    surname(parent) {
+      return parent.surname
+    },
+    name(parent) {
+      return parent.name
+    },
+    email(parent) {
+      return parent.email
+    },
+    phone(parent) {
+      return parent.phone
+    },
+    town(parent) {
+      return parent.town
+    },
+    region(parent) {
+      return parent.region
+    },
+    box(parent) {
+      return parent.box
+    },
+    country(parent) {
+      return parent.country
+    },
+    comment1(parent) {
+      return parent.comment1
+    },
+    comment2(parent) {
+      return parent.comment2
+    },
   },
   Mutation: {
     //function to create a contact

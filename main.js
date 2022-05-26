@@ -9,6 +9,7 @@ const server = new ApolloServer(
   {
     typeDefs,
     resolvers,
+    csrfPrevention: true,
     dataSources: () => ({
       contacts: new ContactsDataSources(db.collection('mescontacts'))
     })
