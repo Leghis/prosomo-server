@@ -8,6 +8,32 @@ const resolvers = {
     getContact: async (_, args, {dataSources: {contacts}}) => {
       return contacts.getContact(args.id)
     },
+
+    //filtre par region
+    filterRegion: async (_, {region}, {dataSources: {contacts}}) => {
+      return contacts.filterRegion(region)
+    },
+
+    //filtre par code postal
+    filterBox: async (_, {box}, {dataSources: {contacts}}) => {
+      return contacts.filterBox(box)
+    },
+
+    //récupérer les régions
+    getRegions: async (_, __, {dataSources: {contacts}}) => {
+      return contacts.getRegions()
+    },
+
+    //récupérer les box
+    getBox: async (_, __, {dataSources: {contacts}}) => {
+      return contacts.getBox()
+    }
+
+  },
+  Contact:{
+    surname(parent){
+      return  parent.surname
+    }
   },
   Mutation: {
     //function to create a contact

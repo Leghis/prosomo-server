@@ -24,9 +24,26 @@ const typeDefs = gql`
     data : [Contact]
   }
 
+  type filterRegion{
+    _id : ID,
+    state : String,
+    total : Int
+  }
+
+  type filterBox{
+    _id : ID,
+    postalCode : String,
+    total : Int
+  }
+
   type Query{
     getAllContact(perPage: Int, page:Int):data
     getContact(id:ID): Contact
+    filterRegion(region:String):[filterRegion]
+    filterBox(box:String):[filterBox]
+    getRegions : [String]
+    getBox : [String]
+
   }
 
   input ContactInput {

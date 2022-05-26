@@ -5,8 +5,7 @@ const SECOND = 60
 
 class ContactsDataSources extends MongoDataSource {
 
-   async getAllContact(args) {
-    console.log(args)
+  async getAllContact(args) {
     this.dataArray = await this.collection.aggregate([
       {
         $group: {
@@ -32,6 +31,59 @@ class ContactsDataSources extends MongoDataSource {
     return this.findOneById(id, {ttl: SECOND})
   }
 
+  async filterRegion(region) {
+    let variable = region?{region : { $regex : new RegExp(region, "i")}}: {}
+    let filter =  await this.collection.aggregate([
+      {
+        $match: variable
+      },
+      {
+        $group: {
+          _id: "$region",
+          state: {$first: "$region"},
+          total: {$sum: 1}
+        }
+      },
+      {
+        $sort: {
+          "total": 1
+        }
+      }
+    ]).toArray()
+
+    return filter
+  }
+
+  async filterBox(box) {
+    let variable = box?{box : { $regex : new RegExp(box, "i")}}: {}
+    let filter =  await this.collection.aggregate([
+      {
+        $match: variable
+      },
+      {
+        $group: {
+          _id: "$box",
+          postalCode: {$first: "$box"},
+          total: {$sum: 1}
+        }
+      },
+      {
+        $sort: {
+          "total": 1
+        }
+      }
+    ]).toArray()
+
+    return filter
+  }
+
+  getRegions(){
+    return this.collection.distinct("region")
+  }
+
+  getBox(){
+    return this.collection.distinct("box")
+  }
 
   createContact(args) {
     let id = uuidv4()
@@ -58,7 +110,7 @@ class ContactsDataSources extends MongoDataSource {
     return 'Deleted Contact'
   }
 
-   refreshContact(id, contact) {
+  refreshContact(id, contact) {
     this.collection.findOneAndUpdate({_id: id}, {$set: contact})
     return contact
   }
