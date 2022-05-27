@@ -105,7 +105,7 @@ class ContactsDataSources extends MongoDataSource {
   }
 
   deleteContact(id) {
-    this.collection.findOneAndDelete({_id: id})
+    this.collection.findOneAndDelete({_id: ObjectId(id)})
     return 'Deleted Contact'
   }
 
