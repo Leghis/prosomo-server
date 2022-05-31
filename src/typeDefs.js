@@ -5,7 +5,7 @@ const typeDefs = gql`
   type Contact{
     _id: ID
     surname: String
-    DefaultRelation:Relation
+    defaultRelation:Relation
     name: String
     email: String
     phone: String
@@ -68,7 +68,7 @@ const typeDefs = gql`
   }
 
   input ContactInput {
-    DefaultRelation:String
+    defaultRelation:String
     surname: String
     name: String
     email: String

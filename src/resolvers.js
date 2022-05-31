@@ -48,8 +48,8 @@ const resolvers = {
     surname(parent) {
       return parent.surname
     },
-    DefaultRelation(parent, args, {dataloaders}, info){
-      return dataloaders.getDefaultContact.load(info.variableValues.getContactId??parent._id.toString());  // root of Book is Author
+    defaultRelation(parent, args, {dataloaders}, info){
+      return dataloaders.getDefaultContact.load(info.variableValues.getContactId??parent._id.toString());
     },
     // author: async (root, args, context, info) => {
     //   return context.authorLoader.load(root.id);  // root of Book is Author
