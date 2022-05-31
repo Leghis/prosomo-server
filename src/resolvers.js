@@ -1,5 +1,6 @@
 const resolvers = {
   Query: {
+    //Fonction relative au contact
     //function to retrieve all contacts
     getAllContact: async (_, args, {dataSources: {contacts}}) => {
       return contacts.getAllContact(args)
@@ -27,8 +28,18 @@ const resolvers = {
     //récupérer les box
     getBox: async (_, __, {dataSources: {contacts}}) => {
       return contacts.getBox()
-    }
+    },
 
+  //  Fonction relative au relation
+    //function to retrieve all contacts
+    getAllRelation: async (_, args, {dataSources: {relations}}) => {
+      return relations.getAllRelation(args.contactID)
+    },
+
+    //function to retrieve a relation
+    getRelation: async (_, args, {dataSources: {relations}}) => {
+      return relations.getRelation(args.id)
+    },
   },
   Contact: {
     _id(parent) {
@@ -37,6 +48,12 @@ const resolvers = {
     surname(parent) {
       return parent.surname
     },
+    DefaultRelation(parent, args, {dataloaders}, info){
+      return dataloaders.getDefaultContact.load(info.variableValues.getContactId??parent._id.toString());  // root of Book is Author
+    },
+    // author: async (root, args, context, info) => {
+    //   return context.authorLoader.load(root.id);  // root of Book is Author
+    // }
     name(parent) {
       return parent.name
     },
@@ -66,6 +83,7 @@ const resolvers = {
     },
   },
   Mutation: {
+    // Fonction relative aux contact
     //function to create a contact
     createContact: async (_, args, {dataSources: {contacts}}) => {
       return contacts.createContact(args)
@@ -74,10 +92,28 @@ const resolvers = {
     deleteContact: async (_, {id}, {dataSources: {contacts}}) => {
       return contacts.deleteContact(id)
     },
+
     //function to update a contact
     refreshContact: async (_, {contact, id}, {dataSources: {contacts}}) => {
       return contacts.refreshContact(id, contact)
-    }
+    },
+
+
+    // Fonction relative aux relations
+    //function to create a relation
+    createRelation: async (_, args, {dataSources: {relations}}) => {
+      return relations.createRelation(args)
+    },
+
+    //function to update a contact
+    refreshRelation: async (_, {relation, id}, {dataSources: {relations}}) => {
+      return relations.refreshRelation(id, relation)
+    },
+
+    //function to delete a contact
+    deleteRelation: async (_, {id}, {dataSources: {relations}}) => {
+      return relations.deleteRelation(id)
+    },
   }
 }
 

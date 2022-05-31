@@ -11,12 +11,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@babel/preset-env": "^7.18.2",
     "apollo-datasource-mongodb": "^0.5.4",
     "apollo-server": "^3.6.5",
-    "graphql": "^16.3.0",
+    "dataloader": "^2.1.0",
+    "graphql": "^15.0.0",
+    "graphql-middleware": "^6.1.28",
     "mongodb": "^4.5.0",
-    "mongoose": "^6.2.7",
-    "nodemon": "^2.0.16",
-    "uuid": "^8.3.2"
+    "nodemon": "^2.0.16"
   }
 }

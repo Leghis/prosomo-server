@@ -1,5 +1,4 @@
 const {MongoDataSource} = require('apollo-datasource-mongodb')
-const {v4: uuidv4} = require("uuid");
 const {ObjectId} = require("mongodb");
 
 const SECOND = 60
@@ -112,6 +111,10 @@ class ContactsDataSources extends MongoDataSource {
   refreshContact(id, contact) {
     this.collection.findOneAndUpdate({_id: ObjectId(id)}, {$set: contact})
     return contact
+  }
+
+  inserLog(typeAction,data,time){
+
   }
 }
 
