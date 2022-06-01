@@ -31,14 +31,16 @@ const server = new ApolloServer(
     context: async () => {
       return {
         dataloaders: {
-          getDefaultContact: new DataLoader( async (keys) => {
+          getDefaultContact: new DataLoader(async (keys) => {
             // const results = await db.fetchAllKeys(keys)
             // return keys.map(key => results[key] || new Error(`No result for ${key}`))
-            const results = await db.collection("relations").find({contactID:{$in:keys}, default: true}).toArray()
+            const results = await db.collection("relations").find({contactID: {$in: keys},default:true}).toArray()
+
+            // console.log(results)
             return keys.map((key,index) =>{
-              if(results[index] && key === results[index].contactID){
-                return results[index]
-              }
+              let final = null
+              results.map((result,index)=>(key === result.contactID) && (final = result))
+              return final
             })|| new Error(`No result for ${key}`)
           })
         }
