@@ -28,6 +28,7 @@ class ContactsDataSources extends MongoDataSource {
   }
 
   getContact(id) {
+    this.deleteFromCacheById(id)
     return this.findOneById(id, {ttl: SECOND})
   }
 
@@ -104,17 +105,15 @@ class ContactsDataSources extends MongoDataSource {
   }
 
   deleteContact(id) {
+    this.deleteFromCacheById(id)
     this.collection.findOneAndDelete({_id: ObjectId(id)})
     return 'Deleted Contact'
   }
 
   refreshContact(id, contact) {
+    this.deleteFromCacheById(id)
     this.collection.findOneAndUpdate({_id: ObjectId(id)}, {$set: contact})
     return contact
-  }
-
-  inserLog(typeAction,data,time){
-
   }
 }
 
