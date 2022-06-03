@@ -40,6 +40,12 @@ const resolvers = {
     getRelation: async (_, args, {dataSources: {relations}}) => {
       return relations.getRelation(args.id)
     },
+
+    emailExist: async (_, args, {dataSources: {contacts}}) => {
+      return contacts.emailExist(args.email)
+    },
+
+
   },
   Contact: {
     _id(parent) {

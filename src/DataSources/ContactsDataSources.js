@@ -32,6 +32,11 @@ class ContactsDataSources extends MongoDataSource {
     return this.findOneById(id, {ttl: SECOND})
   }
 
+    async emailExist(dataEmail) {
+    let email =  await this.findByFields({email: dataEmail})
+     return !!email.length
+  }
+
   async filterRegion(region) {
     let variable = region?{region : { $regex : new RegExp(region, "i")}}: {}
     let filter =  await this.collection.aggregate([
@@ -87,7 +92,7 @@ class ContactsDataSources extends MongoDataSource {
   }
 
   createContact(args) {
-    const {surname, name, email, phone, town, region, box, country, comment1, comment2} = args.contact;
+    const {surname, name, email, phone, town, region, box, country,date, comment1, comment2} = args.contact;
     const contact = {
       surname,
       name,
@@ -97,6 +102,7 @@ class ContactsDataSources extends MongoDataSource {
       region,
       box,
       country,
+      date,
       comment1: comment1 ? comment1 : "",
       comment2: comment2 ? comment2 : ""
     }
@@ -110,8 +116,8 @@ class ContactsDataSources extends MongoDataSource {
     return 'Deleted Contact'
   }
 
-  refreshContact(id, contact) {
-    this.deleteFromCacheById(id)
+   async refreshContact(id, contact) {
+    await this.deleteFromCacheById(id)
     this.collection.findOneAndUpdate({_id: ObjectId(id)}, {$set: contact})
     return contact
   }

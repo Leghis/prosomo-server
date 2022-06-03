@@ -13,6 +13,7 @@ const typeDefs = gql`
     region: String
     box: String
     country: String
+    date:String
     comment1: String
     comment2: String
   }
@@ -28,6 +29,7 @@ const typeDefs = gql`
     region: String
     box: String
     country: String
+    date:String
     comment1: String
     comment2: String
     default : Boolean
@@ -64,7 +66,7 @@ const typeDefs = gql`
     filterBox(box:String):[filterBox]
     getRegions : [String]
     getBox : [String]
-
+    emailExist(email:String):Boolean
   }
 
   input ContactInput {
@@ -77,6 +79,7 @@ const typeDefs = gql`
     region: String
     box: String
     country: String
+    date:String
     comment1: String
     comment2: String
   }
@@ -90,6 +93,7 @@ const typeDefs = gql`
     region: String
     box: String
     country: String
+    date:String
     comment1: String
     comment2: String
     default:Boolean
@@ -97,12 +101,12 @@ const typeDefs = gql`
 
 
   type Mutation{
-#    Mutations relatives aux contacts
+    #    Mutations relatives aux contacts
     createContact(contact: ContactInput!): Contact
     deleteContact(id: ID!): String
     refreshContact(id: ID!,contact: ContactInput):Contact
 
-#    Mutations relatives aux relations
+    #    Mutations relatives aux relations
     createRelation(relation: RelationInput!): Relation
     deleteRelation(id: ID!): String
     refreshRelation(id: ID!,relation: RelationInput):Relation
